@@ -15,5 +15,13 @@ pipeline {
                 }
             }
         }
+
+        stage("push docker image") {
+            withCredentials([usernamePassword(credentialsId: 'DockerhubCreds', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    sh "docker login -u $USERNAME -p $PASSWORD"
+                    sh "docker tag myapp3 donfortune1/myapp3:latest"
+                    sh "docker push donfortune1/myapp3:latest"
+                }
+        }
     }
 }
